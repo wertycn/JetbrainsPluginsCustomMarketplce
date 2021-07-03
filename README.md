@@ -1,2 +1,38 @@
-# JetbrainsPluginsCustomMarketplce
-Jetbrains Plugins Custom Marketplce
+# Jetbrains 插件自定义市场
+JPCM(Jetbrains 插件自定义市场), 旨在提供一个开箱即用的在组织内部共享非公开发行的jetbrains系列IDE的插件，或在内部网络中提供公共插件的服务。基于本服务，您可以快速的在组织内网搭建器jetbrains系列插件的内网源。
+
+[立即试用(暂未开放)](http://jpcm.debug.icu)
+
+## 功能特色
+
+1. 自动识别IDE类型及版本
+2. 插件信息自动提取
+3. 开箱即用，标准版本基于H2内存数据库，不依赖外部服务即可快速启动
+4. 支持非管理员用户上传（可关闭或审核后开放）
+
+## TODO:
+
+* [ ] 开发方案
+* [ ] 项目初始化
+* [ ] 插件数据管理（CURD）
+* [ ] web管理界面
+* [ ] 插件手动上传表单
+* [ ] 自动解析插件信息
+* [ ] 用户及权限管理（低优先级）
+* [ ] 来源统计及分析
+* [ ] Docker一键部署
+
+
+
+
+
+
+
+
+
+## 运行环境
+
+openjdk 11   
+
+
+
