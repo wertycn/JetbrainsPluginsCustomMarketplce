@@ -1,0 +1,122 @@
+<idea-plugin url="https://plugins.jetbrains.com/plugin/164">
+  <name>IdeaVim</name>
+  <id>IdeaVIM</id>
+  <change-notes>
+     &lt;h3&gt;Features:&lt;/h3&gt;
+     &lt;ul&gt;
+     &lt;li&gt;Support &lt;code&gt;NERDTree&lt;/code&gt; extension &lt;a href="https://youtrack.jetbrains.com/issue/VIM-1042"&gt;VIM-1042&lt;/a&gt; |
+       &lt;a href="https://github.com/preservim/nerdtree"&gt;NERDTree&lt;/a&gt;
+     &lt;/li&gt;
+     &lt;li&gt;Support &lt;code&gt;maxmapdepth&lt;/code&gt; option to define the maximum depth of mappings
+     &lt;/li&gt;
+     &lt;/ul&gt;
+
+     &lt;h3&gt;Fixes:&lt;/h3&gt;
+     &lt;ul&gt;
+     &lt;li&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-2202"&gt;VIM-2202&lt;/a&gt;
+       Fix macro recording for ex command and search
+     &lt;/li&gt;
+     &lt;li&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-1799"&gt;VIM-1799&lt;/a&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-1794"&gt;VIM-1794&lt;/a&gt;
+       Special characters are not interpreted on yanking
+     &lt;/li&gt;
+     &lt;li&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-2218"&gt;VIM-2218&lt;/a&gt;
+       Fix some shortcuts for 2021.+
+     &lt;/li&gt;
+     &lt;li&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-2217"&gt;VIM-2217&lt;/a&gt;
+       Fix adding new line at the end of the file for the AppCode
+     &lt;/li&gt;
+     &lt;li&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-2220"&gt;VIM-2220&lt;/a&gt;
+       Do not try to get a commandState for null editor
+     &lt;/li&gt;
+     &lt;li&gt;
+       &lt;a href="https://youtrack.jetbrains.com/issue/VIM-2153"&gt;VIM-2153&lt;/a&gt;
+       Fix storing special characters after IDE closing
+     &lt;/li&gt;
+     &lt;/ul&gt;
+
+     &lt;h3&gt;Merged PRs:&lt;/h3&gt;
+     &lt;ul&gt;
+     &lt;li&gt;
+       &lt;a href="https://github.com/JetBrains/ideavim/pull/269"&gt;269&lt;/a&gt;
+       by &lt;a href="https://github.com/daya0576"&gt;大牙(Henry Zhu)&lt;/a&gt;: fix invalid link of submodule docs
+     &lt;/li&gt;
+     &lt;/ul&gt;
+    
+  </change-notes>
+  <description>
+      &lt;p&gt;Vim emulation plugin for IntelliJ Platform-based IDEs.&lt;/p&gt;
+      &lt;br/&gt;
+      &lt;p&gt;IdeaVim supports many Vim features including normal/insert/visual modes, motion keys, deletion/changing,
+      marks, registers, some Ex commands, Vim regexps, configuration via ~/.ideavimrc, macros, Vim plugins, etc.&lt;/p&gt;
+      &lt;br/&gt;
+      &lt;p&gt;See also:&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="https://github.com/JetBrains/ideavim"&gt;GitHub repository&lt;/a&gt;: documentation and contributing&lt;/li&gt;
+        &lt;li&gt;&lt;a href="https://youtrack.jetbrains.com/issues/VIM"&gt;Issue tracker&lt;/a&gt;: feature requests and bug reports&lt;/li&gt;
+      &lt;/ul&gt;
+    </description>
+  <version>0.65</version>
+  <vendor>JetBrains</vendor>
+  <idea-version since-build="202.5103.13"/>
+  <depends>com.intellij.modules.lang</depends>
+  <resource-bundle>messages.IdeaVimBundle</resource-bundle>
+  <application-components>
+    <component>
+      <implementation-class>com.maddyhome.idea.vim.DynamicLoaderStopper</implementation-class>
+    </component>
+  </application-components>
+  <extensionPoints>
+    <extensionPoint name="vimExtension" beanClass="com.maddyhome.idea.vim.extension.ExtensionBeanClass" dynamic="true">
+      <with attribute="implementation" implements="com.maddyhome.idea.vim.extension.VimExtension"/>
+    </extensionPoint>
+    <extensionPoint name="vimExCommand" beanClass="com.maddyhome.idea.vim.ex.ExBeanClass" dynamic="true">
+      <with attribute="implementation" implements="com.maddyhome.idea.vim.ex.CommandHandler"/>
+    </extensionPoint>
+    <extensionPoint name="vimAction" beanClass="com.maddyhome.idea.vim.handler.ActionBeanClass" dynamic="true">
+      <with attribute="implementation" implements="com.maddyhome.idea.vim.handler.EditorActionHandlerBase"/>
+    </extensionPoint>
+  </extensionPoints>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable groupId="editor" instance="com.maddyhome.idea.vim.ui.VimEmulationConfigurable"/>
+    <projectService serviceImplementation="com.maddyhome.idea.vim.group.NotificationService"/>
+    <statusBarWidgetFactory implementation="com.maddyhome.idea.vim.ui.StatusBarIconFactory"/>
+    <statusBarWidgetFactory implementation="com.maddyhome.idea.vim.ui.ShowCmdStatusBarWidgetFactory" order="first"/>
+    <applicationService serviceImplementation="com.maddyhome.idea.vim.VimPlugin"/>
+    <postStartupActivity implementation="com.maddyhome.idea.vim.PluginStartup" order="first"/>
+    <editorFloatingToolbarProvider implementation="com.maddyhome.idea.vim.ui.ReloadFloatingToolbar"/>
+    <actionPromoter implementation="com.maddyhome.idea.vim.key.VimActionsPromoter" order="last"/>
+  </extensions>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="/META-INF/includes/ApplicationServices.xml" xpointer="xpointer(/idea-plugin/*)"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="/META-INF/includes/VimActions.xml" xpointer="xpointer(/idea-plugin/*)"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="/META-INF/includes/VimExCommands.xml" xpointer="xpointer(/idea-plugin/*)"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="/META-INF/includes/VimExtensions.xml" xpointer="xpointer(/idea-plugin/*)"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="/META-INF/includes/VimListeners.xml" xpointer="xpointer(/idea-plugin/*)"/>
+  <actions resource-bundle="messages.IdeaVimBundle">
+    <action id="VimPluginToggle" class="com.maddyhome.idea.vim.action.VimPluginToggleAction">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+    </action>
+    <action id="VimInternalAddBlockInlays" class="com.maddyhome.idea.vim.action.internal.AddBlockInlaysAction" text="Add Test Block Inlays | IdeaVim Internal" internal="true"/>
+    <action id="VimInternalAddInlineInlays" class="com.maddyhome.idea.vim.action.internal.AddInlineInlaysAction" text="Add Test Inline Inlays | IdeaVim Internal" internal="true"/>
+    <action id="VimShortcutKeyAction" class="com.maddyhome.idea.vim.action.VimShortcutKeyAction"/>
+    <action id="VimActions" class="com.maddyhome.idea.vim.ui.VimActions"/>
+    <group id="IdeaVim.ReloadVimRc.group" class="com.maddyhome.idea.vim.ui.ReloadFloatingToolbarActionGroup">
+      <action id="IdeaVim.ReloadVimRc.reload" class="com.maddyhome.idea.vim.ui.ReloadVimRc">
+        <keyboard-shortcut first-keystroke="control shift O" keymap="$default"/>
+        <keyboard-shortcut first-keystroke="control shift O" keymap="Eclipse" remove="true"/>
+        <keyboard-shortcut first-keystroke="control shift O" keymap="NetBeans 6.5" remove="true"/>
+        <keyboard-shortcut first-keystroke="control shift O" keymap="Visual Studio" remove="true"/>
+        <keyboard-shortcut first-keystroke="meta shift O" keymap="Mac OS X" replace-all="true"/>
+        <keyboard-shortcut first-keystroke="meta shift O" keymap="Eclipse (Mac OS X)" replace-all="true" remove="true"/>
+        <keyboard-shortcut first-keystroke="meta shift O" keymap="Xcode" replace-all="true" remove="true"/>
+        <keyboard-shortcut first-keystroke="meta shift I" keymap="Mac OS X 10.5+" replace-all="true"/>
+      </action>
+    </group>
+    <action id="VimFindActionIdAction" class="com.maddyhome.idea.vim.listener.FindActionIdAction"/>
+  </actions>
+</idea-plugin>
